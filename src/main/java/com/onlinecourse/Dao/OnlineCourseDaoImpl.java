@@ -43,8 +43,9 @@ public class OnlineCourseDaoImpl implements IOnlineCourseDao {
 	}
 
 	public void addCourse(OnlineCourse course) {
-		dbConnection.getConnection();
+		
 		try {
+			connection = dbConnection.getConnection();
 			ps=connection.prepareStatement(Quary.addCourseQuary);
 			ps.setString(1, course.getCourseName());
 			ps.setString(2, course.getFaculty());

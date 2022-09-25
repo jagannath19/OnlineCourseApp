@@ -3,7 +3,7 @@ package com.onlinecourse.model;
 public class OnlineCourse {
 	private String courseName;
 	private int courseId;
-	private String faculty;
+	private String facultyName;
 	private String category;
 	private int timeduration;
 	private double courseFee;
@@ -15,7 +15,7 @@ public class OnlineCourse {
 			double price) {
 		super();
 		this.courseName = courseName;
-		this.faculty = faculty;
+		this.facultyName = faculty;
 		this.category = category;
 		this.timeduration = timeduration;
 		this.courseFee = price;
@@ -33,10 +33,10 @@ public class OnlineCourse {
 		this.courseId = courseId;
 	}
 	public String getFaculty() {
-		return faculty;
+		return facultyName;
 	}
 	public void setFaculty(String faculty) {
-		this.faculty = faculty;
+		this.facultyName = faculty;
 	}
 	public String getCategory() {
 		return category;
@@ -58,7 +58,7 @@ public class OnlineCourse {
 	}
 	@Override
 	public String toString() {
-		return "OnlineCourse [courseName=" + courseName + ", courseId=" + courseId + ", faculty=" + faculty
+		return "OnlineCourse [courseName=" + courseName + ", courseId=" + courseId + ", faculty=" + facultyName
 				+ ", category=" + category + ", timeduration=" + timeduration + ", price=" + courseFee + "]";
 	}
 		
