@@ -6,8 +6,7 @@ import com.course.model.Course;
 
 public interface ICourseDao {
 	
-//	boolean adminLogin(String adminId,String adminPassword);
-//	boolean userlogin(String userId,String userPassword);
+	
 	
 	
 	void addCourse(Course course);
@@ -22,6 +21,8 @@ public interface ICourseDao {
 	List<Course> findByCategoryAndFaculty(String category,String facultyName);
 	List<Course> findByNameContaining(String name);
 	List<Course> findByNameAndFaculty(String name,String faculty);
+	
+	
 	
 
 }
