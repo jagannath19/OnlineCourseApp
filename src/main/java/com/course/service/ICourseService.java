@@ -8,8 +8,9 @@ public interface ICourseService {
 	
 	void addCourse(Course course);
 	Course getById(int courseId);
-	void updateCourse(int courseId,double courseFee);
-	void deleteCourse(int courseId);
+	int updateCourse(int courseId,double courseFee);
+	int deleteCourse(int courseId);
+	List<Course> getAllCourse();
 	
 	
 	List<Course> getByCategory(String Category);

@@ -14,9 +14,11 @@ public class DbConnection {
 
 		try {
 			connection = DriverManager.getConnection(url, username, password);
-//			PreparedStatement ps = connection.prepareStatement(Queries.createQuery);
-//			boolean val = ps.execute();
-//			System.out.println(val);
+			/*
+			 * PreparedStatement ps =
+			 * connection.prepareStatement(Queries.createCourseQuery); boolean val =
+			 * ps.execute(); System.out.println(val);
+			 */
 
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -11,8 +11,9 @@ public interface ICourseDao {
 	
 	void addCourse(Course course);
 	Course findById(int courseId);
-	void updateCourse(int courseId,double courseFee);
-	void deleteCourse(int courseId);
+	int updateCourse(int courseId,double courseFee);
+	int deleteCourse(int courseId);
+	List<Course> findAllCourse();
 	
 	
 	List<Course> findByCategory(String Category);

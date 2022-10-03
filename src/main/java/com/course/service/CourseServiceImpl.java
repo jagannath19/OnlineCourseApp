@@ -7,6 +7,7 @@ import com.course.dao.CourseDaoImpl;
 import com.course.dao.ICourseDao;
 import com.course.exception.CategoryNotFoundException;
 import com.course.exception.CourseNotFoundException;
+import com.course.exception.InvalidInputException;
 import com.course.model.Course;
 
 public class CourseServiceImpl implements ICourseService {
@@ -20,22 +21,35 @@ public class CourseServiceImpl implements ICourseService {
 
 	@Override
 	public Course getById(int courseId) throws CourseNotFoundException {
-		Course course = dao.findById(courseId);
-		if (course != null)
-			return course;
-		else
-			throw new CourseNotFoundException("Course not found");
+		if (courseId <= 0)
+			throw new InvalidInputException("Negative input can not accept");
+		else {
+			Course course = dao.findById(courseId);
+			if (course == null)
+				throw new CourseNotFoundException("Course not found");
+			else
+				return course;
+		}
 	}
 
 	@Override
-	public void updateCourse(int courseId, double courseFee) {
-		dao.updateCourse(courseId, courseFee);
-
+	public int updateCourse(int courseId, double courseFee) {
+		if (courseId <= 0 || courseFee <= 0)
+			throw new InvalidInputException("Negative input can not accept");
+		else {
+			int info = dao.updateCourse(courseId, courseFee);
+			return info;
+		}
 	}
 
 	@Override
-	public void deleteCourse(int courseId) {
-		dao.deleteCourse(courseId);
+	public int deleteCourse(int courseId) {
+		if (courseId <= 0)
+			throw new InvalidInputException("Negative input can not accept");
+		else {
+			int info = dao.deleteCourse(courseId);
+			return info;
+		}
 	}
 
 	@Override
@@ -43,10 +57,10 @@ public class CourseServiceImpl implements ICourseService {
 		List<Course> courseList = dao.findByCategory(Category).stream()
 				.sorted((name1, name2) -> name1.getCourseName().compareTo(name2.getCourseName()))
 				.collect(Collectors.toList());
-		if (courseList != null)
-			return courseList;
+		if (courseList == null || courseList.isEmpty())
+			throw new CourseNotFoundException("Course not found");
 		else
-			throw new CategoryNotFoundException("Category not found");
+			return courseList;
 
 	}
 
@@ -56,10 +70,10 @@ public class CourseServiceImpl implements ICourseService {
 		List<Course> courseList = dao.findByCategoryAndLessFee(category, courseFees).stream()
 				.sorted((name1, name2) -> name1.getCourseName().compareTo(name2.getCourseName()))
 				.collect(Collectors.toList());
-		if (courseList != null)
-			return courseList;
-		else
+		if (courseList == null || courseList.isEmpty())
 			throw new CourseNotFoundException("Course not found");
+		else
+			return courseList;
 	}
 
 	@Override
@@ -68,10 +82,10 @@ public class CourseServiceImpl implements ICourseService {
 		List<Course> courseList = dao.findByCategoryAndFaculty(category, facultyName).stream()
 				.sorted((name1, name2) -> name1.getCourseName().compareTo(name2.getCourseName()))
 				.collect(Collectors.toList());
-		if (courseList != null)
-			return courseList;
-		else
+		if (courseList == null || courseList.isEmpty())
 			throw new CourseNotFoundException("Course not found");
+		else
+			return courseList;
 	}
 
 	@Override
@@ -80,10 +94,10 @@ public class CourseServiceImpl implements ICourseService {
 		List<Course> courseList = dao.findByNameContaining(name).stream()
 				.sorted((name1, name2) -> name1.getCourseName().compareTo(name2.getCourseName()))
 				.collect(Collectors.toList());
-		if (courseList != null)
-			return courseList;
-		else
+		if (courseList == null || courseList.isEmpty())
 			throw new CourseNotFoundException("Course not found");
+		else
+			return courseList;
 	}
 
 	@Override
@@ -91,10 +105,17 @@ public class CourseServiceImpl implements ICourseService {
 		List<Course> courseList = dao.findByNameAndFaculty(name, faculty).stream()
 				.sorted((name1, name2) -> name1.getCourseName().compareTo(name2.getCourseName()))
 				.collect(Collectors.toList());
-		if (courseList != null)
-			return courseList;
-		else
+		if (courseList == null || courseList.isEmpty())
 			throw new CourseNotFoundException("Course not found");
+		else
+			return courseList;
+	}
+
+	@Override
+	public List<Course> getAllCourse() {
+		return dao.findAllCourse().stream()
+				.sorted((name1, name2) -> name1.getCourseName().compareTo(name2.getCourseName()))
+				.collect(Collectors.toList());
 	}
 
 }

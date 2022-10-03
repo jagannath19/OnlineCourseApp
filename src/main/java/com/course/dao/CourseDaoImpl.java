@@ -12,6 +12,12 @@ import com.course.util.DbConnection;
 import com.course.util.Queries;
 
 public class CourseDaoImpl implements ICourseDao {
+	
+	/**
+	 *@author JagannathSutar
+	 *@param coure
+	 *This method allows the admin to add a new course
+	 */
 
 	@Override
 	public void addCourse(Course course) {
@@ -41,6 +47,12 @@ public class CourseDaoImpl implements ICourseDao {
 			DbConnection.closeConnection();
 		}
 	}
+	
+	/**
+	 * @author JagannathSutar
+	 * @param courseId
+	 * This method allows admin to find course  by courseId
+	 */
 
 	@Override
 	public Course findById(int courseId) {
@@ -80,19 +92,26 @@ public class CourseDaoImpl implements ICourseDao {
 
 		
 	}
+	
+	/**
+	 * @author JagannathSutar
+	 * @param courseId
+	 * @param courseFee
+	 * This method allow the admin to update price in a course
+	 */
 
 	@Override
-	public void updateCourse(int courseId, double courseFee) {
+	public int updateCourse(int courseId, double courseFee) {
 		Connection connection = null;
 		PreparedStatement statement = null;
+		int output=0;
 		try {
 			connection = DbConnection.openConnection();
 			statement = connection.prepareStatement(Queries.QueryUpdate);
 			statement.setDouble(1, courseFee);
 			statement.setInt(2, courseId);
-			int val = statement.executeUpdate();
-			if (val == 1)
-				System.out.println("Update successful");
+			 output = statement.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -104,19 +123,24 @@ public class CourseDaoImpl implements ICourseDao {
 				}
 			DbConnection.closeConnection();
 		}
+		return output;
 	}
 
+	/**
+	 * @author JagannathSutar
+	 * This method allows the user to delete a course by admin
+	 */
 	@Override
-	public void deleteCourse(int courseId) {
+	public int deleteCourse(int courseId) {
 		Connection connection = null;
 		PreparedStatement statement = null;
+		int output=0;
 		try {
 			connection = DbConnection.openConnection();
 			statement = connection.prepareStatement(Queries.QueryDelete);
 			statement.setInt(1, courseId);
-			int val = statement.executeUpdate();
-			if (val == 1)
-				System.out.println("Course deleted");
+			output = statement.executeUpdate();
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -129,15 +153,20 @@ public class CourseDaoImpl implements ICourseDao {
 				}
 			DbConnection.closeConnection();
 		}
+		return output;
 
 	}
 
+	/**
+	 * @author JagannathSutar
+	 * This method helps user to filter course by category
+	 */
 	@Override
 	public List<Course> findByCategory(String Category) {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		Course course;
-		List<Course> courseList = new ArrayList<Course>();
+		List<Course> courses = new ArrayList<Course>();
 		try {
 			connection = DbConnection.openConnection();
 			statement = connection.prepareStatement(Queries.QueryCourseByCategory);
@@ -152,7 +181,7 @@ public class CourseDaoImpl implements ICourseDao {
 				course.setCategory(resultset.getString(5));
 				course.setDurationInDays(resultset.getInt(6));
 				course.setCourseFee(resultset.getDouble(7));
-				courseList.add(course);
+				courses.add(course);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -166,14 +195,18 @@ public class CourseDaoImpl implements ICourseDao {
 			DbConnection.closeConnection();
 		}
 
-		return courseList;
+		return courses;
 	}
-
+	
+	/**
+	 * @author JagannathSutar
+	 * This method helps user to filter courses by category and courseFee
+	 */
 	@Override
 	public List<Course> findByCategoryAndLessFee(String category, double courseFees) {
 		Connection connection = null;
 		PreparedStatement statement = null;
-		List<Course> courseList = new ArrayList<>();
+		List<Course> courses = new ArrayList<>();
 		try {
 			connection = DbConnection.openConnection();
 			statement = connection.prepareStatement(Queries.QueryCourseByCategoryAndFee);
@@ -189,7 +222,7 @@ public class CourseDaoImpl implements ICourseDao {
 				course.setCategory(resultset.getString(5));
 				course.setDurationInDays(resultset.getInt(6));
 				course.setCourseFee(resultset.getDouble(7));
-				courseList.add(course);
+				courses.add(course);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -205,14 +238,20 @@ public class CourseDaoImpl implements ICourseDao {
 			DbConnection.closeConnection();
 		}
 
-		return courseList;
+		return courses;
 	}
+	
+	/**
+	 * @param category
+	 * @param facultyName
+	 * This method helps user to filter courses by category and faculty name
+	 */
 
 	@Override
 	public List<Course> findByCategoryAndFaculty(String category, String facultyName) {
 		Connection connection = null;
 		PreparedStatement statement = null;
-		List<Course> courseList = new ArrayList<>();
+		List<Course> courses = new ArrayList<>();
 		try {
 			connection = DbConnection.openConnection();
 			statement = connection.prepareStatement(Queries.QueryCourseByCategoryAndFaculty);
@@ -228,7 +267,7 @@ public class CourseDaoImpl implements ICourseDao {
 				course.setCategory(resultset.getString(5));
 				course.setDurationInDays(resultset.getInt(6));
 				course.setCourseFee(resultset.getDouble(7));
-				courseList.add(course);
+				courses.add(course);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -244,14 +283,19 @@ public class CourseDaoImpl implements ICourseDao {
 			DbConnection.closeConnection();
 		}
 
-		return courseList;
+		return courses;
 	}
 
+	/**
+	 * @author JagannathSutar
+	 * @param name
+	 * This method helps user to find course by course name
+	 */
 	@Override
 	public List<Course> findByNameContaining(String name) {
 		Connection connection = null;
 		PreparedStatement statement = null;
-		List<Course> courseList = new ArrayList<>();
+		List<Course> courses = new ArrayList<>();
 		try {
 			connection = DbConnection.openConnection();
 			statement = connection.prepareStatement(Queries.QueryCourseByCourseName);
@@ -266,7 +310,7 @@ public class CourseDaoImpl implements ICourseDao {
 				course.setCategory(resultset.getString(5));
 				course.setDurationInDays(resultset.getInt(6));
 				course.setCourseFee(resultset.getDouble(7));
-				courseList.add(course);
+				courses.add(course);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -281,14 +325,21 @@ public class CourseDaoImpl implements ICourseDao {
 			}
 			DbConnection.closeConnection();
 		}
-		return courseList;
+		return courses;
 	}
+	
+	/**
+	 * @author JagannathSutar
+	 * @param name
+	 * @param faculty
+	 * This method helps user to find course by course name and faculty name
+	 */
 
 	@Override
 	public List<Course> findByNameAndFaculty(String name, String faculty) {
 		Connection connection = null;
 		PreparedStatement statement = null;
-		List<Course> courseList = new ArrayList<>();
+		List<Course> courses = new ArrayList<>();
 		try {
 			connection = DbConnection.openConnection();
 			statement = connection.prepareStatement(Queries.QueryCourseByCourseNameAndFaculty);
@@ -304,7 +355,7 @@ public class CourseDaoImpl implements ICourseDao {
 				course.setCategory(resultset.getString(5));
 				course.setDurationInDays(resultset.getInt(6));
 				course.setCourseFee(resultset.getDouble(7));
-				courseList.add(course);
+				courses.add(course);
 			}
 
 		} catch (SQLException e) {
@@ -321,7 +372,51 @@ public class CourseDaoImpl implements ICourseDao {
 			DbConnection.closeConnection();
 		}
 
-		return courseList;
+		return courses;
+	}
+	
+	/**
+	 * @author JagannathSutar
+	 * This method show all the courses in the app
+	 */
+
+	@Override
+	public List<Course> findAllCourse() {
+		
+		Connection connection = null;
+		PreparedStatement statement = null;
+		List<Course> courses = new ArrayList<>();
+		try {
+			connection = DbConnection.openConnection();
+			statement = connection.prepareStatement(Queries.QueryAllCourses);
+			ResultSet resultset = statement.executeQuery();
+			while (resultset.next()) {
+				Course course = new Course();
+				course.setCourseName(resultset.getString(1));
+				course.setCourseId(resultset.getInt(2));
+				course.setFacultyName(resultset.getString(3));
+				course.setMode(resultset.getString(4));
+				course.setCategory(resultset.getString(5));
+				course.setDurationInDays(resultset.getInt(6));
+				course.setCourseFee(resultset.getDouble(7));
+				courses.add(course);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			DbConnection.closeConnection();
+		}
+
+		return courses;
 	}
 
 	
