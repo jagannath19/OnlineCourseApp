@@ -5,29 +5,41 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.course.model.Order;
 import com.course.model.User;
 import com.course.util.DbConnection;
+import com.course.util.PasswordGenerator;
 import com.course.util.Queries;
 
-public class UserDao implements IUserDao {
-
+/**
+ * @author JagannathSutar
+ * @implNote implements IUserDao interface
+ * This class use for do all the user operation with database
+ *
+ */
+public class UserDaoImpl implements IUserDao {
+	
+	/**
+	 * @param user
+	 * @return auto generated password
+	 * this method use to add a new user in database
+	 */
 	@Override
 	public String addUser(User user) {
 		Connection connection = DbConnection.openConnection();
 		PreparedStatement statement = null;
+		boolean check =true;
+		String password=PasswordGenerator.autoPassword();
 		try {
 			statement = connection.prepareStatement(Queries.QueryAddUser);
 			statement.setString(1, user.getUsername());
 			statement.setString(2, user.getName());
 			statement.setLong(3, user.getMobile());
 			statement.setString(4, user.getEmail());
-			statement.setString(5, user.getPassword());
+			statement.setString(5, password);
 			statement.setInt(6, 0);
-			boolean check = statement.execute();
-			if (check == false) {
-				System.out.println("user added");
-				System.out.println("Note the password-");
-			}
+			 check=statement.execute();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,9 +53,21 @@ public class UserDao implements IUserDao {
 				}
 		}
 		DbConnection.closeConnection();
+		if (!check) {
+			System.out.println("user added");
+			System.out.println("Note the password-");
+		}
 
-		return user.getPassword();
+		return password;
 	}
+	
+	
+	/**
+	 * @param username
+	 * @param password
+	 * @return User object
+	 * this method is use to verify user name and password of the user and admin
+	 */
 
 	@Override
 	public User login(String username, String password) {
@@ -78,7 +102,11 @@ public class UserDao implements IUserDao {
 
 		return user;
 	}
-
+	/**
+	 * @param username
+	 * @param password
+	 * this method is use to change the login password
+	 */
 	@Override
 	public int changePassword(String username,String password) {
 		Connection connection = null;
@@ -106,34 +134,52 @@ public class UserDao implements IUserDao {
 
 		
 	}
+	
+	
+	/**
+	 * @param username
+	 * @return Order object
+	 * This method use to see the order details
+	 */
 
 	@Override
-	public int buyCourse(int courseId, String username) {
-			Connection connection=null;
-			PreparedStatement statement=null;
-			int output=0;
-			connection =DbConnection.openConnection();
-			try {
-				statement=connection.prepareStatement(Queries.QueryBuyCourse);
-				statement.setInt(1, courseId);
-				statement.setString(2, username);
-				output=statement.executeUpdate();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	public Order orderDetails(String username) {
+		Order order=new Order();
+		Connection connection=null;
+		PreparedStatement statement=null;
+		connection=DbConnection.openConnection();
+		try {
+			statement=connection.prepareStatement(Queries.QueryOrderDetais);
+			statement.setString(1, username);
+			ResultSet resultset=statement.executeQuery();
+			while(resultset.next()) {
+			order.setUserName(resultset.getString(1));
+			order.setMobile(resultset.getLong(2));
+			order.setEmail(resultset.getString(3));
+			order.setCourseName(resultset.getString(4));
+			order.setFacultyName(resultset.getString(5));
+			order.setMode(resultset.getString(6));
+			order.setCategory(resultset.getString(7));
+			order.setDurationInDays(resultset.getInt(8));
+			order.setCourseFee(resultset.getDouble(9));
 			}
-			finally {
-				if(statement!=null)
-					try {
-						statement.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				DbConnection.closeConnection();
-				
-			}
-		return output;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			if(statement!=null)
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			DbConnection.closeConnection();
+		}
+		return order;
 	}
+	
+	
 
 }

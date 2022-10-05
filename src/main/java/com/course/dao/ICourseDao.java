@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.course.model.Course;
 
+/**
+ * @author JagannathSutar
+ */
 public interface ICourseDao {
 	
 	
@@ -22,6 +25,7 @@ public interface ICourseDao {
 	List<Course> findByCategoryAndFaculty(String category,String facultyName);
 	List<Course> findByNameContaining(String name);
 	List<Course> findByNameAndFaculty(String name,String faculty);
+	int buyCourse(int courseId,String username);
 	
 	
 	

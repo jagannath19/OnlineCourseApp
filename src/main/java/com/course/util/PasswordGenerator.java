@@ -2,7 +2,15 @@ package com.course.util;
 
 import java.util.Random;
 
+/**
+ * @author JagannathSutar
+ *
+ */
 public class PasswordGenerator {
+	/**
+	 * @return String
+	 * This method use to auto generate the password and return the password
+	 */
 	public static String autoPassword() {
 	String lowerCase="qwertyuiopasdfghjklmnbvcxz";
 	String uperCase="QWERTYUIOPASDFGHJKLMNBVCXZ";

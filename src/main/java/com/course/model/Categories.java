@@ -1,5 +1,9 @@
 package com.course.model;
 
+/**
+ * @author JagannathSutar
+ * Enum for category
+ */
 public enum Categories {
 	UPSC,
 	JEE,

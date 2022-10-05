@@ -8,17 +8,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.course.model.Course;
+import com.course.util.CourseMapper;
 import com.course.util.DbConnection;
+import com.course.util.IRowMapper;
 import com.course.util.Queries;
 
+/**
+ * @author JagannathSutar
+ * @implNote implements ICourseDao
+ * This class use for do all the course operation with database
+ */
 public class CourseDaoImpl implements ICourseDao {
 	
 	/**
-	 *@author JagannathSutar
 	 *@param coure
 	 *This method allows the admin to add a new course
-	 */
 
+	 */
+	IRowMapper mapper=new CourseMapper();
 	@Override
 	public void addCourse(Course course) {
 		Connection connection = DbConnection.openConnection();
@@ -51,6 +58,7 @@ public class CourseDaoImpl implements ICourseDao {
 	/**
 	 * @author JagannathSutar
 	 * @param courseId
+	 * @return Course 
 	 * This method allows admin to find course  by courseId
 	 */
 
@@ -94,9 +102,9 @@ public class CourseDaoImpl implements ICourseDao {
 	}
 	
 	/**
-	 * @author JagannathSutar
 	 * @param courseId
 	 * @param courseFee
+	 * return integer 
 	 * This method allow the admin to update price in a course
 	 */
 
@@ -128,6 +136,8 @@ public class CourseDaoImpl implements ICourseDao {
 
 	/**
 	 * @author JagannathSutar
+	 * @param courseId
+	 * @return integer
 	 * This method allows the user to delete a course by admin
 	 */
 	@Override
@@ -158,31 +168,21 @@ public class CourseDaoImpl implements ICourseDao {
 	}
 
 	/**
-	 * @author JagannathSutar
+	 * @param Category
+	 * @return List of course
 	 * This method helps user to filter course by category
 	 */
 	@Override
 	public List<Course> findByCategory(String Category) {
 		Connection connection = null;
 		PreparedStatement statement = null;
-		Course course;
 		List<Course> courses = new ArrayList<Course>();
 		try {
 			connection = DbConnection.openConnection();
 			statement = connection.prepareStatement(Queries.QueryCourseByCategory);
 			statement.setString(1, Category);
 			ResultSet resultset = statement.executeQuery();
-			while (resultset.next()) {
-				course = new Course();
-				course.setCourseName(resultset.getString(1));
-				course.setCourseId(resultset.getInt(2));
-				course.setFacultyName(resultset.getString(3));
-				course.setMode(resultset.getString(4));
-				course.setCategory(resultset.getString(5));
-				course.setDurationInDays(resultset.getInt(6));
-				course.setCourseFee(resultset.getDouble(7));
-				courses.add(course);
-			}
+			courses=mapper.mapRow(resultset);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -199,7 +199,9 @@ public class CourseDaoImpl implements ICourseDao {
 	}
 	
 	/**
-	 * @author JagannathSutar
+	 * @param category
+	 * @param courseFees
+	 * @return List of course
 	 * This method helps user to filter courses by category and courseFee
 	 */
 	@Override
@@ -213,17 +215,7 @@ public class CourseDaoImpl implements ICourseDao {
 			statement.setString(1, category);
 			statement.setDouble(2, courseFees);
 			ResultSet resultset = statement.executeQuery();
-			while (resultset.next()) {
-				Course course = new Course();
-				course.setCourseName(resultset.getString(1));
-				course.setCourseId(resultset.getInt(2));
-				course.setFacultyName(resultset.getString(3));
-				course.setMode(resultset.getString(4));
-				course.setCategory(resultset.getString(5));
-				course.setDurationInDays(resultset.getInt(6));
-				course.setCourseFee(resultset.getDouble(7));
-				courses.add(course);
-			}
+			courses=mapper.mapRow(resultset);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -244,6 +236,7 @@ public class CourseDaoImpl implements ICourseDao {
 	/**
 	 * @param category
 	 * @param facultyName
+	 * @return List of course
 	 * This method helps user to filter courses by category and faculty name
 	 */
 
@@ -258,17 +251,7 @@ public class CourseDaoImpl implements ICourseDao {
 			statement.setString(1, category);
 			statement.setString(2, facultyName);
 			ResultSet resultset = statement.executeQuery();
-			while (resultset.next()) {
-				Course course = new Course();
-				course.setCourseName(resultset.getString(1));
-				course.setCourseId(resultset.getInt(2));
-				course.setFacultyName(resultset.getString(3));
-				course.setMode(resultset.getString(4));
-				course.setCategory(resultset.getString(5));
-				course.setDurationInDays(resultset.getInt(6));
-				course.setCourseFee(resultset.getDouble(7));
-				courses.add(course);
-			}
+			courses=mapper.mapRow(resultset);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -287,8 +270,8 @@ public class CourseDaoImpl implements ICourseDao {
 	}
 
 	/**
-	 * @author JagannathSutar
 	 * @param name
+	 * @return List of course
 	 * This method helps user to find course by course name
 	 */
 	@Override
@@ -301,17 +284,7 @@ public class CourseDaoImpl implements ICourseDao {
 			statement = connection.prepareStatement(Queries.QueryCourseByCourseName);
 			statement.setString(1, name);
 			ResultSet resultset = statement.executeQuery();
-			while (resultset.next()) {
-				Course course = new Course();
-				course.setCourseName(resultset.getString(1));
-				course.setCourseId(resultset.getInt(2));
-				course.setFacultyName(resultset.getString(3));
-				course.setMode(resultset.getString(4));
-				course.setCategory(resultset.getString(5));
-				course.setDurationInDays(resultset.getInt(6));
-				course.setCourseFee(resultset.getDouble(7));
-				courses.add(course);
-			}
+			courses=mapper.mapRow(resultset);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -329,9 +302,9 @@ public class CourseDaoImpl implements ICourseDao {
 	}
 	
 	/**
-	 * @author JagannathSutar
 	 * @param name
 	 * @param faculty
+	 * @return List of course
 	 * This method helps user to find course by course name and faculty name
 	 */
 
@@ -346,17 +319,7 @@ public class CourseDaoImpl implements ICourseDao {
 			statement.setString(1, name);
 			statement.setString(2, faculty);
 			ResultSet resultset = statement.executeQuery();
-			while (resultset.next()) {
-				Course course = new Course();
-				course.setCourseName(resultset.getString(1));
-				course.setCourseId(resultset.getInt(2));
-				course.setFacultyName(resultset.getString(3));
-				course.setMode(resultset.getString(4));
-				course.setCategory(resultset.getString(5));
-				course.setDurationInDays(resultset.getInt(6));
-				course.setCourseFee(resultset.getDouble(7));
-				courses.add(course);
-			}
+			courses=mapper.mapRow(resultset);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -390,17 +353,8 @@ public class CourseDaoImpl implements ICourseDao {
 			connection = DbConnection.openConnection();
 			statement = connection.prepareStatement(Queries.QueryAllCourses);
 			ResultSet resultset = statement.executeQuery();
-			while (resultset.next()) {
-				Course course = new Course();
-				course.setCourseName(resultset.getString(1));
-				course.setCourseId(resultset.getInt(2));
-				course.setFacultyName(resultset.getString(3));
-				course.setMode(resultset.getString(4));
-				course.setCategory(resultset.getString(5));
-				course.setDurationInDays(resultset.getInt(6));
-				course.setCourseFee(resultset.getDouble(7));
-				courses.add(course);
-			}
+			courses=mapper.mapRow(resultset);
+			
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -418,7 +372,41 @@ public class CourseDaoImpl implements ICourseDao {
 
 		return courses;
 	}
+	/**
+	 * @param courseId
+	 * @param username
+	 * @return integer
+	 * this method use to buy a course
+	 */
 
+	@Override
+	public int buyCourse(int courseId, String username) {
+			Connection connection=null;
+			PreparedStatement statement=null;
+			int output=0;
+			connection =DbConnection.openConnection();
+			try {
+				statement=connection.prepareStatement(Queries.QueryBuyCourse);
+				statement.setInt(1, courseId);
+				statement.setString(2, username);
+				output=statement.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			finally {
+				if(statement!=null)
+					try {
+						statement.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				DbConnection.closeConnection();
+				
+			}
+		return output;
+	}
 	
 
 }

@@ -4,18 +4,24 @@ package com.course.model;
  * @author JagannathSutar
  *
  */
-public class Course {
+public class Order {
+	private String userName;
+	private long mobile;
+	private String email;
 	private String courseName;
-	private Integer courseId;
 	private String facultyName;
 	private String mode;
 	private String category;
 	private int durationInDays;
 	private double courseFee;
-	public Course() {
+	public Order() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 	/**
+	 * @param userName
+	 * @param mobile
+	 * @param email
 	 * @param courseName
 	 * @param facultyName
 	 * @param mode
@@ -23,9 +29,12 @@ public class Course {
 	 * @param durationInDays
 	 * @param courseFee
 	 */
-	public Course(String courseName, String facultyName, String mode, String category,
-			int durationInDays, double courseFee) {
+	public Order(String userName, long mobile, String email, String courseName, String facultyName, String mode,
+			String category, int durationInDays, double courseFee) {
 		super();
+		this.userName = userName;
+		this.mobile = mobile;
+		this.email = email;
 		this.courseName = courseName;
 		this.facultyName = facultyName;
 		this.mode = mode;
@@ -33,41 +42,29 @@ public class Course {
 		this.durationInDays = durationInDays;
 		this.courseFee = courseFee;
 	}
-	
-	
-	
-	
-	/**
-	 * @param courseName
-	 * @param courseId
-	 * @param facultyName
-	 * @param mode
-	 * @param category
-	 * @param durationInDays
-	 * @param courseFee
-	 */
-	public Course(String courseName, Integer courseId, String facultyName, String mode, String category,
-			int durationInDays, double courseFee) {
-		super();
-		this.courseName = courseName;
-		this.courseId = courseId;
-		this.facultyName = facultyName;
-		this.mode = mode;
-		this.category = category;
-		this.durationInDays = durationInDays;
-		this.courseFee = courseFee;
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public long getMobile() {
+		return mobile;
+	}
+	public void setMobile(long mobile) {
+		this.mobile = mobile;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getCourseName() {
 		return courseName;
 	}
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
-	}
-	public int getCourseId() {
-		return courseId;
-	}
-	public void setCourseId(Integer courseId) {
-		this.courseId = courseId;
 	}
 	public String getFacultyName() {
 		return facultyName;
@@ -101,12 +98,11 @@ public class Course {
 	}
 	@Override
 	public String toString() {
-		return "OnlineCourse [courseName=" + courseName + ", courseId=" + courseId + ", facultyName=" + facultyName
-				+ ", mode=" + mode + ", category=" + category + ", durationInDays=" + durationInDays + ", courseFee="
-				+ courseFee + "]";
+		return "Order [userName=" + userName + ", mobile=" + mobile + ", email=" + email + ", courseName=" + courseName
+				+ ", facultyName=" + facultyName + ", mode=" + mode + ", category=" + category + ", durationInDays="
+				+ durationInDays + ", courseFee=" + courseFee + "]";
 	}
 	
 	
-		
-	
+
 }

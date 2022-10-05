@@ -1,11 +1,16 @@
 package com.course.service;
 
 import com.course.dao.IUserDao;
-import com.course.dao.UserDao;
+import com.course.dao.UserDaoImpl;
+import com.course.model.Order;
 import com.course.model.User;
 
+/**
+ * @author JagannathSutar
+ * This class methods calls the UserDao class  methods and handle exception if there
+ */
 public class UserService implements IUserService {
-	IUserDao userDao=new UserDao();
+	IUserDao userDao=new UserDaoImpl();
 	@Override
 	public String addUser(User user) {
 		
@@ -24,10 +29,12 @@ public class UserService implements IUserService {
 		return userDao.changePassword(username, password);
 	}
 
+	
+
 	@Override
-	public int buyCourse(int courseId, String username) {
+	public Order orderDetails(String username) {
 		
-		return userDao.buyCourse(courseId, username);
+		return userDao.orderDetails(username);
 	}
 
 }

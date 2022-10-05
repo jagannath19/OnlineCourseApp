@@ -1,5 +1,9 @@
 package com.course.util;
 
+/**
+ * @author JagannathSutar
+ *
+ */
 public class Queries {
 	public static final String createCourseQuery = "create table course(courseName varchar(20),"
 			+ "courseId integer primary key auto_increment,facultyName varchar(30),"

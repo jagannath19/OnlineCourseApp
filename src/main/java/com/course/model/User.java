@@ -1,5 +1,9 @@
 package com.course.model;
 
+/**
+ * @author JagannathSutar
+ *
+ */
 public class User {
 	private String username; //pk
 	private String name;
@@ -11,6 +15,28 @@ public class User {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	/**
+	 * @param username
+	 * @param name
+	 * @param mobile
+	 * @param email
+	 */
+	public User(String username, String name, long mobile, String email) {
+		super();
+		this.username = username;
+		this.name = name;
+		this.mobile = mobile;
+		this.email = email;
+	}
+
+	/**
+	 * @param username
+	 * @param name
+	 * @param mobile
+	 * @param email
+	 * @param password
+	 */
 	public User(String username, String name, long mobile, String email, String password) {
 		super();
 		this.username = username;
@@ -20,6 +46,14 @@ public class User {
 		this.password = password;
 	}
 	
+	/**
+	 * @param username
+	 * @param name
+	 * @param mobile
+	 * @param email
+	 * @param password
+	 * @param courseId
+	 */
 	public User(String username, String name, long mobile, String email, String password, Integer courseId) {
 		super();
 		this.username = username;

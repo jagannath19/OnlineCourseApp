@@ -10,10 +10,13 @@ import com.course.service.CourseServiceImpl;
 import com.course.service.ICourseService;
 import com.course.service.IUserService;
 import com.course.service.UserService;
-//import com.course.util.DbConnection;
-import com.course.util.PasswordGenerator;
 import com.mysql.cj.exceptions.PasswordExpiredException;
 
+/**
+ * @author JagannathSutar
+ *  This is the main class of this application
+ *  
+ */
 public class Client {
 
 	public static void main(String[] args) {
@@ -133,7 +136,7 @@ public class Client {
 				throw new PasswordExpiredException("Invalid user id or password");
 			} else {
 				System.out.println("Welcome user-" + user.getName());
-				 username=user.getUsername();
+				username = user.getUsername();
 
 				boolean flag = false;
 				do {
@@ -156,8 +159,10 @@ public class Client {
 						}
 						System.out.println("Choose the courseId, you want to purchase");
 						int courseId = scn.nextInt();
-						if(userService.buyCourse(courseId, username)==1)
+						if (service.buyCourse(courseId, username) == 1) {
+							System.out.println(userService.orderDetails(username));
 							System.out.println("Thank you for Purchase the course");
+						}
 						break;
 					case 2: /* course by category and course fee */
 						System.out.println(
@@ -172,9 +177,11 @@ public class Client {
 							System.out.println(course);
 						}
 						System.out.println("Choose the courseId, you want to purchase");
-						 courseId = scn.nextInt();
-						if(userService.buyCourse(courseId, username)==1)
+						courseId = scn.nextInt();
+						if (service.buyCourse(courseId, username) == 1) {
+							System.out.println(userService.orderDetails(username));
 							System.out.println("Thank you for Purchase the course");
+						}
 						break;
 					case 3: /* courses by category and faculty */
 						System.out.println(
@@ -190,9 +197,11 @@ public class Client {
 						}
 						System.out.println("Choose the courseId, you want to purchase");
 						courseId = scn.nextInt();
-						if(userService.buyCourse(courseId, username)==1)
+						if (service.buyCourse(courseId, username) == 1) {
+							System.out.println(userService.orderDetails(username));
 							System.out.println("Thank you for Purchase the course");
-						
+						}
+
 						break;
 					case 4: /* course by course name */
 						System.out.println("Course name-");
@@ -201,9 +210,11 @@ public class Client {
 							System.out.println(course);
 						}
 						System.out.println("Choose the courseId, you want to purchase");
-						 courseId = scn.nextInt();
-						if(userService.buyCourse(courseId, username)==1)
+						courseId = scn.nextInt();
+						if (service.buyCourse(courseId, username) == 1) {
+							System.out.println(userService.orderDetails(username));
 							System.out.println("Thank you for Purchase the course");
+						}
 						break;
 					case 5: /* courses by course name and faculty name */
 						System.out.println("Course name-");
@@ -215,12 +226,17 @@ public class Client {
 						}
 						System.out.println("Choose the courseId, you want to purchase");
 						courseId = scn.nextInt();
-						if(userService.buyCourse(courseId, username)==1)
+						if (service.buyCourse(courseId, username) == 1) {
+							System.out.println(userService.orderDetails(username));
 							System.out.println("Thank you for Purchase the course");
+						}
 						break;
-						
+
 					case 6: /* user purchase course */
-						
+
+						System.out.println(userService.orderDetails(username));
+						break;
+
 					case 7: /* change password */
 						System.out.println("Username-");
 						username = scn.nextLine();
@@ -242,7 +258,7 @@ public class Client {
 					else
 						flag = false;
 				} while (flag);
-
+				break;
 			}
 		case 3:
 			System.out.println("Unique username-");
@@ -254,8 +270,7 @@ public class Client {
 			scn.nextLine();
 			System.out.println("Email-");
 			String email = scn.nextLine();
-			password = PasswordGenerator.autoPassword();
-			user = new User(userName, name, mobile, email, password);
+			user = new User(userName, name, mobile, email);
 			System.out.println(userService.addUser(user));
 			break;
 

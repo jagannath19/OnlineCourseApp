@@ -4,6 +4,10 @@ import java.util.List;
 
 import com.course.model.Course;
 
+/**
+ * @author JagannathSutar
+ *
+ */
 public interface ICourseService {
 	
 	void addCourse(Course course);
@@ -19,4 +23,5 @@ public interface ICourseService {
 	List<Course> getByCategoryAndFaculty(String category,String facultyName);
 	List<Course> getByNameContaining(String name);
 	List<Course> getByNameAndFaculty(String name,String faculty);
+	int buyCourse(int courseId,String username);
 }

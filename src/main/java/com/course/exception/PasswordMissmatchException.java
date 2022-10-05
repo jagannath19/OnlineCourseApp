@@ -1,5 +1,9 @@
 package com.course.exception;
 
+/**
+ * @author JagannathSutar
+ * This exception class extends  RuntimeException
+ */
 public class PasswordMissmatchException extends RuntimeException {
 
 	/**
