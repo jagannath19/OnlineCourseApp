@@ -23,7 +23,6 @@ public class CourseDaoImpl implements ICourseDao {
 	/**
 	 *@param coure
 	 *This method allows the admin to add a new course
-
 	 */
 	IRowMapper mapper=new CourseMapper();
 	@Override

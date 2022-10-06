@@ -2,6 +2,7 @@ package com.course.service;
 
 import com.course.dao.IUserDao;
 import com.course.dao.UserDaoImpl;
+import com.course.exception.InvalidInputException;
 import com.course.model.Order;
 import com.course.model.User;
 
@@ -24,9 +25,11 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public int changePassword(String username,String password) {
-		// TODO Auto-generated method stub
+	public int changePassword(String username,String password) throws InvalidInputException{
+		if(password.length()==8)
 		return userDao.changePassword(username, password);
+		else
+			throw new InvalidInputException("Password should be 8 characters only");
 	}
 
 	

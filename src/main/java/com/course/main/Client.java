@@ -109,6 +109,7 @@ public class Client {
 						for (Course courses : service.getAllCourse()) {
 							System.out.println(courses);
 						}
+						break;
 					default:
 						System.out.println("Invalid Input");
 						break;
@@ -238,8 +239,6 @@ public class Client {
 						break;
 
 					case 7: /* change password */
-						System.out.println("Username-");
-						username = scn.nextLine();
 						System.out.println("New 8 digit password");
 						password = scn.nextLine();
 						if (userService.changePassword(username, password) == 1)
