@@ -8,8 +8,10 @@ import com.course.model.Mode;
 import com.course.model.User;
 import com.course.service.CourseServiceImpl;
 import com.course.service.ICourseService;
+import com.course.service.IOrderService;
 import com.course.service.IUserService;
-import com.course.service.UserService;
+import com.course.service.OrderServiceImpl;
+import com.course.service.UserServiceImpl;
 import com.mysql.cj.exceptions.PasswordExpiredException;
 
 /**
@@ -23,7 +25,8 @@ public class Client {
 
 		Scanner scn = new Scanner(System.in);
 		ICourseService service = new CourseServiceImpl();
-		IUserService userService = new UserService();
+		IUserService userService = new UserServiceImpl();
+		IOrderService orderService=new OrderServiceImpl();
 		System.out.println("Welcome to Education Application");
 		/*
 		 * DbConnection database=new DbConnection(); database.getConnection();
@@ -161,7 +164,7 @@ public class Client {
 						System.out.println("Choose the courseId, you want to purchase");
 						int courseId = scn.nextInt();
 						if (service.buyCourse(courseId, username) == 1) {
-							System.out.println(userService.orderDetails(username));
+							System.out.println(orderService.orderDetails(username));
 							System.out.println("Thank you for Purchase the course");
 						}
 						break;
@@ -180,7 +183,7 @@ public class Client {
 						System.out.println("Choose the courseId, you want to purchase");
 						courseId = scn.nextInt();
 						if (service.buyCourse(courseId, username) == 1) {
-							System.out.println(userService.orderDetails(username));
+							System.out.println(orderService.orderDetails(username));
 							System.out.println("Thank you for Purchase the course");
 						}
 						break;
@@ -199,7 +202,7 @@ public class Client {
 						System.out.println("Choose the courseId, you want to purchase");
 						courseId = scn.nextInt();
 						if (service.buyCourse(courseId, username) == 1) {
-							System.out.println(userService.orderDetails(username));
+							System.out.println(orderService.orderDetails(username));
 							System.out.println("Thank you for Purchase the course");
 						}
 
@@ -213,7 +216,7 @@ public class Client {
 						System.out.println("Choose the courseId, you want to purchase");
 						courseId = scn.nextInt();
 						if (service.buyCourse(courseId, username) == 1) {
-							System.out.println(userService.orderDetails(username));
+							System.out.println(orderService.orderDetails(username));
 							System.out.println("Thank you for Purchase the course");
 						}
 						break;
@@ -228,14 +231,14 @@ public class Client {
 						System.out.println("Choose the courseId, you want to purchase");
 						courseId = scn.nextInt();
 						if (service.buyCourse(courseId, username) == 1) {
-							System.out.println(userService.orderDetails(username));
+							System.out.println(orderService.orderDetails(username));
 							System.out.println("Thank you for Purchase the course");
 						}
 						break;
 
 					case 6: /* user purchase course */
 
-						System.out.println(userService.orderDetails(username));
+						System.out.println(orderService.orderDetails(username));
 						break;
 
 					case 7: /* change password */

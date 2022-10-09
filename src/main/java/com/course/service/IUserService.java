@@ -1,6 +1,5 @@
 package com.course.service;
 
-import com.course.model.Order;
 import com.course.model.User;
 
 /**
@@ -13,6 +12,4 @@ public interface IUserService {
 	User login(String username,String password);
 	int changePassword(String username,String password);
 	
-	Order orderDetails(String username);
-
 }

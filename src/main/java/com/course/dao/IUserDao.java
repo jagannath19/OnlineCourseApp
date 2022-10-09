@@ -1,6 +1,8 @@
+/**
+ * 
+ */
 package com.course.dao;
 
-import com.course.model.Order;
 import com.course.model.User;
 
 /**
@@ -8,11 +10,9 @@ import com.course.model.User;
  *
  */
 public interface IUserDao {
-	String addUser(User user);
+	public String addUser(User user);
+	public User login(String username, String password);
+	public int changePassword(String username,String password);
 	
-	User login(String username,String password);
-	int changePassword(String username,String password);
-	
-	Order orderDetails(String username);
 
 }

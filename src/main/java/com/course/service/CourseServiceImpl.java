@@ -12,13 +12,17 @@ import com.course.model.Course;
 
 /**
  * @author JagannathSutar
- * This class methods calls the CourseDao class methods and handle exception if there
+ * This class methods are call the CourseDao class methods and handle exception if there
  */
 public class CourseServiceImpl implements ICourseService {
 
 	ICourseDao dao = new CourseDaoImpl();
 
 	
+	/**
+	 * @param course
+	 * method use to add course
+	 */
 	@Override
 	public void addCourse(Course course) {
 		dao.addCourse(course);
@@ -123,6 +127,12 @@ public class CourseServiceImpl implements ICourseService {
 			return courseList;
 	}
 
+	/**
+	 * @param name
+	 * @return  courseList
+	 * @throws CourseNotFoundException
+	 * method use to get the course by course name
+	 */
 	@Override
 	public List<Course> getByNameContaining(String name) throws CourseNotFoundException {
 
@@ -135,6 +145,13 @@ public class CourseServiceImpl implements ICourseService {
 			return courseList;
 	}
 
+	/**
+	 * @param name
+	 * @param faculty
+	 * @return courseList
+	 * @throws CourseNotFoundException
+	 * method use to get courses by course name and faculty name
+	 */
 	@Override
 	public List<Course> getByNameAndFaculty(String name, String faculty) throws CourseNotFoundException {
 		List<Course> courseList = dao.findByNameAndFaculty(name, faculty).stream()
@@ -148,6 +165,7 @@ public class CourseServiceImpl implements ICourseService {
 
 	/**
 	 * @return sorted list of course
+	 * method use to get all the courses in ascending order
 	 */
 	@Override
 	public List<Course> getAllCourse() {
